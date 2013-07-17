@@ -1,0 +1,9 @@
+/* Codeigniter CAPTCHA for PyroCMS */
+
+/* TEAM */
+    Developer: Kingsley Chan
+    From: Hong Kong
+
+/* Module */
+    Last update:2013/07/17
+    Language: English
