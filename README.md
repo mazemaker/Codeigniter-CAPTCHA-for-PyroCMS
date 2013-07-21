@@ -6,18 +6,18 @@ This module includes a Captcha Library (based on [Codeigniter Captcha](http://ww
 
 ##1. Generate CAPTCHA
 ```php
-    Captcha::get(); // returns [Array] create_captcha($data)
-
+    Captcha::get(); // return [Array] create_captcha($data)
 ```
 
 ##2. Check if the CAPTCHA exists
 ```php
-    Captcha::exists($captcha = '', $ip = '', $time = 0) // [boolean]
+    Captcha::exists($captcha = '', $ip = '', $time = 0) // return [boolean]
 ```
 
 ##3. Remove expired CAPTCHA rows in database
 ```php
     CAPTCHA::remove($expire = 0); // return [boolean] 
 ```
+
 
 By [Web Concept](http://wcept.com)
