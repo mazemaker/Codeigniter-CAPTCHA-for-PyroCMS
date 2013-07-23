@@ -20,7 +20,7 @@ This module includes a Captcha Library (based on [Codeigniter Captcha](http://ww
 
 ##4. Remove expired CAPTCHA rows in database
 ```php
-    CAPTCHA::remove($expire = 0); // return [boolean] 
+    Captcha::remove($expire = 0); // return [boolean]
 ```
 
 
