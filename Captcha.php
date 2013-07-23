@@ -14,7 +14,19 @@ class Captcha {
 	public function __construct()
 	{
             ci()->load->helper('captcha');
-            ci()->load->model('captcha/captcha_m');
+            
+            if(!ci()->db->table_exists('wcept_captcha')){
+                $tables = array(
+                    'wcept_captcha' => array(
+                        'captcha_id' => array('type' => 'BIGINT', 'constraint' => 13, 'auto_increment' => true, 'primary' => true,),
+                        'captcha_time' => array('type' => 'INT', 'constraint' => 11, 'default' => '0', 'null' => false),
+                        'ip_address' => array('type' => 'VARCHAR', 'constraint' => 16, 'default' => '0', 'null' => false),
+                        'word' => array('type' => 'VARCHAR', 'constraint' => 20, 'null' => false, 'key' => true)
+                    ),
+                );
+                
+                ci()->install_tables($tables);
+            }
             
             if(is_dir(FCPATH.'tmp') && is_writable(FCPATH.'tmp')){
                 define("_WCEPT_TEMP_PATH_", FCPATH.'tmp/');
@@ -49,19 +61,43 @@ class Captcha {
                 'word' => $cap['word']
                 );
             
-            ci()->captcha_m->insert_captcha($data);
+            self::_insert_captcha($data);
 
             return $cap;
         }
         
         public static function remove($expire = 0){
-            return ci()->captcha_m->remove_captcha($expire);
+            return self::_remove_captcha($expire);
         }
         
         public static function exists($captcha = '', $ip = '', $time = 0){
-            return ci()->captcha_m->captcha_exists($captcha, trim($ip), $time);
+            return self::_captcha_exists($captcha, trim($ip), $time);
         }
-
+        
+    public function _insert_captcha($data = array()){
+        if(!empty($data)){
+            return ci()->db->insert('wcept_captcha', $data);
+        }
+        
+        return false;
+    }
+    
+    public function _captcha_exists($captcha = '', $ip = '', $time = 0){
+        if($time == 0){
+            $time = time();
+        }
+        
+        $captcha_count = ci()->db->where('word', $captcha)
+                ->where('ip_address', $ip)
+                ->where('captcha_time >', $time)
+                ->count_all_results('wcept_captcha');
+        
+        return ($captcha_count == 1);
+    }
+    
+    public function _remove_captcha($time = 0){
+        return ci()->db->delete('wcept_captcha', array( 'captcha_time <' => $time));
+    }
 }
 
 /* End of file Captcha.php */

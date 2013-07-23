@@ -3,18 +3,22 @@ Codeigniter CAPTCHA for PyroCMS 2.2.1
 
 This module includes a Captcha Library (based on [Codeigniter Captcha](http://www.ellislab.com/codeigniter/user-guide/helpers/captcha_helper.html))
 
+##1. Load the library
+```php
+    $this->load->library('captcha');
+```
 
-##1. Generate CAPTCHA
+##2. Generate CAPTCHA
 ```php
     Captcha::get(); // return [Array] create_captcha($data)
 ```
 
-##2. Check if the CAPTCHA exists
+##3. Check if the CAPTCHA exists
 ```php
     Captcha::exists($captcha = '', $ip = '', $time = 0) // return [boolean]
 ```
 
-##3. Remove expired CAPTCHA rows in database
+##4. Remove expired CAPTCHA rows in database
 ```php
     CAPTCHA::remove($expire = 0); // return [boolean] 
 ```
