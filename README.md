@@ -1,7 +1,7 @@
-Codeigniter CAPTCHA for PyroCMS 2.2.1
+Codeigniter CAPTCHA Library for PyroCMS 2.2.1
 =========
 
-This module includes a Captcha Library (based on [Codeigniter Captcha](http://www.ellislab.com/codeigniter/user-guide/helpers/captcha_helper.html))
+This library generates Captcha with Codeigniter Captcha Helper ([Codeigniter Captcha Helper](http://www.ellislab.com/codeigniter/user-guide/helpers/captcha_helper.html))
 
 ##1. Load the library
 ```php
