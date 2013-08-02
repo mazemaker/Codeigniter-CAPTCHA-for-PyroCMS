@@ -16,16 +16,7 @@ class Captcha {
             ci()->load->helper('captcha');
             
             if(!ci()->db->table_exists('wcept_captcha')){
-                $tables = array(
-                    'wcept_captcha' => array(
-                        'captcha_id' => array('type' => 'BIGINT', 'constraint' => 13, 'auto_increment' => true, 'primary' => true,),
-                        'captcha_time' => array('type' => 'INT', 'constraint' => 11, 'default' => '0', 'null' => false),
-                        'ip_address' => array('type' => 'VARCHAR', 'constraint' => 16, 'default' => '0', 'null' => false),
-                        'word' => array('type' => 'VARCHAR', 'constraint' => 20, 'null' => false, 'key' => true)
-                    ),
-                );
-                
-                ci()->install_tables($tables);
+                self::_create_table();
             }
             
             if(is_dir(FCPATH.'tmp') && is_writable(FCPATH.'tmp')){
@@ -97,6 +88,21 @@ class Captcha {
     
     public function _remove_captcha($time = 0){
         return ci()->db->delete('wcept_captcha', array( 'captcha_time <' => $time));
+    }
+    
+    function _create_table(){
+        $columns = array(
+            'captcha_id' => array('type' => 'BIGINT', 'constraint' => 13, 'auto_increment' => true, 'primary' => true,),
+            'captcha_time' => array('type' => 'INT', 'constraint' => 11, 'default' => '0', 'null' => false),
+            'ip_address' => array('type' => 'VARCHAR', 'constraint' => 16, 'default' => '0', 'null' => false),
+            'word' => array('type' => 'VARCHAR', 'constraint' => 20, 'null' => false, 'key' => true)
+        );
+        
+        ci()->load->dbforge();
+        
+        ci()->dbforge->add_field($columns);
+        ci()->dbforge->add_key('captcha_id', TRUE);
+        ci()->dbforge->create_table('wcept_captcha', TRUE);
     }
 }
 
